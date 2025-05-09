@@ -27,7 +27,6 @@ namespace tree_builder
      *
      * - mirror: Creates a mirror image of the tree. Each node's children are
      * reversed, effectively reflecting the tree.
-     * - reverse: Reverses the order of nodes at each level without changing
      * structure. Similar to mirror but typically applied on a per-level basis.
      * - sort_ascending: Sorts the nodes in ascending order based on a
      * comparator.
@@ -36,7 +35,6 @@ namespace tree_builder
      */
     enum class e_type_of_tree_translation : uint8_t {
         mirror,
-        reverse,
         sort_ascending,
         sort_descending
     };
