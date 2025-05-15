@@ -155,13 +155,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="Tree.cpp" />
-    <ClCompile Include="TreeNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tree.h" />
     <ClInclude Include="TreeBuilderData.h" />
     <ClInclude Include="TreeNode.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Example.py" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -64,7 +64,13 @@ namespace tree_builder
          * @return A pointer to the newly created child node.
          */
         node_type* add_child(const T& data, e_node_kind kind =
-            e_node_kind::internal);
+            e_node_kind::internal)
+        {
+           children_.emplace_back(std::make_unique<node_type>(data, kind));
+           auto* child = children_.back().get();
+           child->parent_ = this;
+           return child;
+        }
 
         /**
          * Adds a new child node by moving the given data.
@@ -77,7 +83,14 @@ namespace tree_builder
          * @return A pointer to the newly created child node.
          */
         node_type* add_child(T&& data, e_node_kind kind =
-            e_node_kind::internal);
+            e_node_kind::internal)
+        {
+           children_.emplace_back(std::make_unique<node_type>(std::move(data),
+              kind));
+           auto* child = children_.back().get();
+           child->parent_ = this;
+           return child;
+        }
 
         /**
          * Removes a specific child node from this node.
@@ -87,7 +100,17 @@ namespace tree_builder
          *
          * @param child A pointer to the child node to be removed.
          */
-        void remove_child(node_type* child);
+        void remove_child(node_type* child)
+        {
+           auto it = std::find_if(children_.begin(), children_.end(),
+                [&](const std::unique_ptr<node_type>& ptr)
+                { return ptr.get() == child; });
+           if (it != children_.end())
+           {
+               (*it)->parent_ = nullptr;
+               children_.erase(it);
+           }
+        }
 
         /**
          * Retrieves all child nodes of this node.
@@ -96,7 +119,16 @@ namespace tree_builder
          *
          * @return A vector of raw pointers to the current node's children.
          */
-        std::vector<node_type*> get_children() const noexcept;
+        std::vector<node_type*> get_children() const noexcept
+        {
+           std::vector<node_type*> result;
+           result.reserve(children_.size());
+           for (const auto& ptr : children_)
+            {
+               result.push_back(ptr.get());
+            }
+           return result;
+        }
 
         /**
          * Gets a const reference to the data stored in the node.
