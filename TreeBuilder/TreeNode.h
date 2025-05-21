@@ -7,7 +7,9 @@
 #include "TreeBuilderData.h"
 
 namespace tree_builder
-{
+{   
+    template<typename T> /*ste*/
+    class tree; /*ste*/
     /**
      * A generic node class used to construct tree structures.
      * This template class represents a node in a tree, which stores a piece of
@@ -20,6 +22,7 @@ namespace tree_builder
     class tree_node
     {
     public:
+        friend class tree<T>;  /*ste*/
          using node_type = tree_node<T>;
 
         /**
